@@ -42,7 +42,7 @@ const Login: React.FC = () => {
           window.location.href = "/home";
         }
       } else {
-        showToast(message, "error");
+        showToast(typeof message === "string" ? message : "An unknown error occurred.", "error");
       }
     }
   };

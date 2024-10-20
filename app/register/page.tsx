@@ -41,10 +41,10 @@ const Register: React.FC = () => {
     } else {
       switch (emailToRegister) {
         case "":
-          showToast(message, "error");
+          showToast(typeof message === "string" ? message : "An unknown error occurred.", "error");
           break;
         default:
-          showToast(message, "error");
+          showToast(typeof message === "string" ? message : "An unknown error occurred.", "error");
           break;
       }
     }
