@@ -3,10 +3,14 @@ import React, { useEffect, useState } from "react";
 import LoadingWrapper from "@/components/LoadingWrapper";
 import { useLoading } from "@/context/LoadingContext";
 import Link from "next/link";
+import { showToast } from "@/components/ToastProvider";
+import isEmailValid from "@/utils/isEmailValid";
 
 const Login: React.FC = () => {
   const { setGlobalLoading } = useLoading();
   const [loading, setIsLoading] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     window.document.title = "CollabHub | Login";
@@ -25,6 +29,23 @@ const Login: React.FC = () => {
     // Cleanup the timer on component unmount
     return () => clearTimeout(timer);
   }, [setGlobalLoading, loading]);
+
+  const handleLogin = () => {
+    const [isValid, message] = isEmailValid(email);
+    if (email === "" || password === "") {
+      showToast("Please fill in all fields.", "error");
+    } else {
+      if (isValid) {
+        setIsLoading(true);
+        // Async operation here
+        if (!loading) {
+          window.location.href = "/home";
+        }
+      } else {
+        showToast(message, "error");
+      }
+    }
+  };
 
   return (
     <LoadingWrapper>
@@ -49,21 +70,32 @@ const Login: React.FC = () => {
         <div className="text-center">
           <p className="mb-4">Login with email</p>
           <div className="flex items-center justify-center mb-2">
-            <label htmlFor="email" className="mr-2 w-24 text-right">Email</label>
+            <label htmlFor="email" className="mr-2 w-24 text-right">
+              Email
+            </label>
             <input
               type="text"
               placeholder="Personal/work email"
               className="text-black py-2 px-4 rounded flex-1"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="flex items-center justify-center mb-2">
-            <label htmlFor="password" className="mr-2 w-24 text-right">Password</label>
+            <label htmlFor="password" className="mr-2 w-24 text-right">
+              Password
+            </label>
             <input
               type="password"
               className="text-black py-2 px-4 rounded flex-1"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="bg-orange-500 text-white mx-1 py-2 px-4 rounded mb-2">
+          <button
+            className="bg-orange-500 text-white mx-1 py-2 px-4 rounded mb-2"
+            onClick={handleLogin}
+          >
             Login
           </button>
         </div>
