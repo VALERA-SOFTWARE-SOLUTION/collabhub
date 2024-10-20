@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import {
   FaTasks,
   FaComments,
@@ -31,6 +32,8 @@ const NavigationRail = () => {
       link: "/live/settings",
     },
   ];
+  const router = useRouter();
+  const pathname = usePathname();
   return (
     <nav className="flex flex-col items-center bg-gray-800 text-white h-screen p-5">
       <div className="mb-8">
@@ -41,13 +44,16 @@ const NavigationRail = () => {
       </button>
       <ul className="space-y-6">
         {links.map((link, index) => {
-          const isActive = window.location.pathname.includes(link.link);
+          const isActive =
+            pathname.includes(link.link)
+              ? true
+              : false;
           return (
             <li
               key={index}
               className={`flex items-center space-x-2 p-2 rounded-lg transition-colors duration-200 relative hover:bg-gray-700 cursor-pointer`}
               onClick={() => {
-                window.location.href = link.link;
+                router.push(link.link);
               }}
             >
               {link.icon}
