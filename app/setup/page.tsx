@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { showToast } from "@/components/ToastProvider";
@@ -39,7 +40,7 @@ const UploadProfilePicture = ({
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={image}
+            src={typeof image === "string" ? image : undefined}
             alt="Profile"
             className="w-full h-full object-cover"
           />
@@ -284,7 +285,7 @@ const AccountPassword = ({
 };
 
 const Setup = () => {
-  const [isValidVisit, setIsValidVisit] = useState(true); // TODO: save the state in the local storage
+  const [isValidVisit] = useState(true); // TODO: save the state in the local storage
   const [currentStep, setCurrentStep] = useState(0);
   const [setupData, setSetupData] = useState({
     profilePicture: null,

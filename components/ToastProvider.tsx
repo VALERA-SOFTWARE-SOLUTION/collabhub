@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 // components/ToastProvider.tsx
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
